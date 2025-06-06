@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h2>Complete Your Payment</h2>
+
+<p>Event: {{ event.name }}</p>
+<p>Amount to Pay: ₹{{ order.amount|divisibleby:100 }}</p>
+
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script>
+var options = {
+    "key": "{{ settings.RAZORPAY_KEY_ID }}",
+    "amount": "{{ order.amount }}",
+    "currency": "INR",
+    "name": "DreamEvent",
+    "description": "Advance Payment for Event Booking",
+    "order_id": "{{ order.id }}",
+    "handler": function (response){
+        alert("Payment Successful! Transaction ID: " + response.razorpay_payment_id);
+        window.location.href = "{% url 'my_bookings' %}";
+    }
+};
+var rzp1 = new Razorpay(options);
+rzp1.open();
+</script>
+
+</body>
+</html>

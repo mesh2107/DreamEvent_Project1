@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>User Registration - DreamEvent</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(to right, #83a4d4, #b6fbff);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 20px;
+      animation: slide 12s infinite alternate;
+    }
+
+    @keyframes slide {
+      0% { background-position: left; }
+      100% { background-position: right; }
+    }
+
+    .container {
+      background: white;
+      padding: 35px 30px;
+      border-radius: 16px;
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+      width: 100%;
+      max-width: 480px;
+      animation: fadeIn 0.8s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 25px;
+      color: #333;
+      font-weight: 600;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="password"],
+    input[type="date"],
+    textarea {
+      width: 100%;
+      padding: 12px 14px;
+      margin-bottom: 18px;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      background: #f9f9f9;
+      font-size: 15px;
+      transition: all 0.3s ease;
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 60px;
+      max-height: 150px;
+    }
+
+    input:focus,
+    textarea:focus {
+      background: #fff;
+      outline: none;
+      border-color: #67bfff;
+      box-shadow: 0 0 6px rgba(103, 191, 255, 0.4);
+    }
+
+    button {
+      width: 100%;
+      padding: 13px;
+      font-size: 16px;
+      background-color: #3f8efc;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      font-weight: bold;
+      transition: background 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #2c76e0;
+      cursor: pointer;
+    }
+
+    .login-link {
+      text-align: center;
+      margin-top: 18px;
+      font-size: 14px;
+    }
+
+    .login-link a {
+      color: #2c76e0;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .login-link a:hover {
+      text-decoration: underline;
+    }
+
+    .error {
+      color: red;
+      font-size: 13px;
+      margin-bottom: 10px;
+    }
+
+    @media (max-width: 480px) {
+      .container {
+        padding: 30px 20px;
+      }
+
+      h2 {
+        font-size: 22px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h2>Register</h2>
+
+  <form method="POST">
+    {% csrf_token %}
+    {% for message in messages %}
+      <div class="error">{{ message }}</div>
+    {% endfor %}
+
+    <input type="text" name="first_name" placeholder="First Name" required pattern="[A-Za-z\s]+" />
+    <input type="text" name="last_name" placeholder="Last Name" required pattern="[A-Za-z\s]+" />
+    <input type="text" name="username" placeholder="Username" required />
+    <input type="text" name="mobile" placeholder="Mobile Number" required pattern="[0-9]{10}">
+    <input type="date" name="dob" placeholder="Date of Birth" required>
+    <input type="email" name="email" placeholder="Email" required />
+    <textarea name="address" placeholder="Address" required></textarea>
+    <input type="password" name="password1" placeholder="Password" required minlength="6" />
+    <input type="password" name="password2" placeholder="Confirm Password" required minlength="6" />
+    <select name="is_admin">
+        <option value="False">User</option>
+        <option value="True">Admin</option>
+      </select>
+    <button type="submit">Register</button>
+
+    <div class="login-link">
+      Already have an account? <a href="{% url 'login' %}">Login</a>
+    </div>
+  </form>
+</div>
+
+</body>
+</html>

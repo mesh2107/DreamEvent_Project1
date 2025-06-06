@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Book Event - DreamEvent</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(120deg, #d4fc79, #96e6a1);
+            margin: 0;
+            padding: 30px;
+        }
+
+        .container {
+            max-width: 700px;
+            margin: auto;
+            background: white;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #2f4858;
+        }
+
+        .event-details {
+            margin-bottom: 30px;
+        }
+
+        .event-details img {
+            max-width: 100%;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        label {
+            font-weight: 600;
+            display: block;
+            margin-top: 15px;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="number"],
+        input[type="date"] {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            margin-top: 5px;
+        }
+
+        input[readonly] {
+            background-color: #f1f1f1;
+        }
+
+        button {
+            margin-top: 25px;
+            padding: 14px;
+            background-color: #00b894;
+            color: white;
+            border: none;
+            font-size: 16px;
+            font-weight: bold;
+            width: 100%;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        button:hover {
+            background-color: #019875;
+        }
+
+        .note {
+            margin-top: 20px;
+            font-size: 14px;
+            color: #333;
+            background: #f9f9f9;
+            padding: 10px;
+            border-left: 4px solid #00b894;
+            border-radius: 6px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Book: {{ event.name }}</h2>
+
+        <div class="event-details">
+            {% if event.image %}
+                <img src="{{ event.image.url }}" alt="{{ event.name }}">
+            {% endif %}
+            <p><strong>Date:</strong> {{ event.date }}</p>
+            <p><strong>Location:</strong> {{ event.location }}</p>
+            <p><strong>Description:</strong> {{ event.description }}</p>
+            <p><strong>Price:</strong> ₹{{ event.price }}</p>
+        </div>
+
+        <p><strong>Advance Payment (40%):</strong> ₹{{ advance_payment }}</p>
+
+        <form method="POST">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <input type="hidden" name="advance_amount" value="{{ advance_payment }}">
+        
+            <button type="submit">Proceed to Payment</button>
+        </form>
+    </div>
+</body>
+</html>
